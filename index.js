@@ -1,64 +1,118 @@
 var readlineSync = require('readline-sync')
 var chalk = require('chalk')
+chalk.bgRgb(15, 100, 204).inverse('Hello!')
 
+console.log("HOW WELL DO YOU KNOW ME?")
+console.log()
 var userName = readlineSync.question(chalk.yellow.bold("What is your name? "));
 console.log(chalk.hex('#8e44ad').bold("Welcome " + userName + " !!\n"))
 
-console.log("This is a quiz to understand", chalk.red("\"How well you know Tahir Ahmed\"") )
+let highestScore = {
+  name: "Tahir",
+  score: 5
+}
 
-if (readlineSync.keyInYN('Do you want to proceed further')) {
-  console.log('Quiz starting now...');
-  console.log("\n")
+
+console.log(chalk.hex('#25ff55')("------------------------------------"))
+console.log(chalk.hex('#ffb800')("Highest Score till now"))
+console.log(chalk.hex('#ffb800')(highestScore.name))
+console.log(chalk.hex('#ffb800')(highestScore.score))
+console.log(chalk.hex('#25ff55')("------------------------------------"))
 
 var questions = [
   {
-    question: "Where was I born? ",
-    answer: "Hindupur"
+    question: "1. What is my gaming alias? ",
+    options:{
+      "A": "Thranduill",
+      "B": "ttahm3d",
+      "C": "mysTik",
+      "D": "morodor"
+    },
+    answer: "B"
   },
   {
-    question: "In which year did I pass my 10th boards? ",
-    answer: "2012"
+    question: "2. When did I join twitter? ",
+    options:{
+      "A": "2015",
+      "B": "2020",
+      "C": "2014",
+      "D": "2019"
+    },
+    answer: "C"
   },
   {
-    question: "How old was I when I watched my first movie in a theater? ",
-    answer: "8"
+    question: "3. Which is my favorite color? ",
+    options: {
+      "A": "Blue",
+      "B": "Sky blue",
+      "C": "Ocean Blue",
+      "D": "None of the above"
+    },
+    answer:"D"
   },
   {
-    question: "In which stream did I complete my Bachelors of Engineering? ",
-    answer: "cs"
+    question: "4. When did I graduate my Engineering? ",
+    options: {
+      "A": "2019",
+      "B": "2020",
+      "C": "2017",
+      "D": "2018"
+    },
+    answer: "D"
   },
   {
-    question: "In which year did I join Wipro? ",
-    answer: "2018"
+    question:"5. Who is my favorite singer? ",
+    options: {
+      "A": "Arijit Singh",
+      "B": "Atif Aslam",
+      "C": "Ustad Nusrat Fateh Ali Khan",
+      "D": "Jubin Nautiyal"
+    },
+    answer: "A"
   }
 ]
 
 var score = 0;
 
-function checkTheAnswer(question, answer){
-  console.log("------------------------------------")
-  var userAnswer = readlineSync.question(chalk.hex('#eaff03')(question))
-  console.log("Your answer is: " + userAnswer)
-  if (userAnswer === answer) {
+function checkTheAnswer(question, options, answer){
+  let que = question;
+  let opt = options;
+  console.log(chalk.bgHex("#0f64cc").inverse(que))
+  console.log()
+  console.log(chalk.hex('#dced6d')("A: " + opt["A"]))
+  console.log(chalk.hex('#dced6d')("B: " + opt.B))
+  console.log(chalk.hex('#dced6d')("C: " + opt.C))
+  console.log(chalk.hex('#dced6d')("D: " + opt.D))
+  console.log()
+  let userAnswer = readlineSync.question("Your answer: ")
+  
+  if (userAnswer.toUpperCase() === answer) {
     console.log(chalk.hex('#02f517')("RIGHT!!!!"))
     score +=1
   }
   else {
     console.log(chalk.hex('#ff0020')('WRONG!!!'))
   }
+  console.log()
   
   console.log("Your current score = " + score + "\n")
 }
 
 for (let i = 0; i< questions.length; i = i+1) {
   currentQuestion = questions[i];
-  checkTheAnswer(currentQuestion.question, currentQuestion.answer)
+  checkTheAnswer(currentQuestion.question, currentQuestion.options, currentQuestion.answer)
 }
 
 console.log(chalk.hex('#05fcf0')("------------------------------------"))
 console.log(chalk.hex('#05fcf0')("Your final score = " + score))
 console.log(chalk.hex('#05fcf0')("------------------------------------"))
-} else {
-  console.log(chalk.green("Well, Try again sometime later"))
-}
 
+
+if(score >= highestScore.score) {
+  highestScore.name = userName;
+  
+  console.log(chalk.hex('#25ff55')("------------------------------------"))
+  console.log(chalk.hex('#ffb800')("You have scored the highest score so far"))
+  console.log(chalk.hex('#ffb800')(highestScore.name))
+  console.log(chalk.hex('#25ff55')("------------------------------------"))
+}
